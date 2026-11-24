@@ -1,5 +1,5 @@
 "$schema" = "node_modules/wrangler/config-schema.json"
-name = "my-flask-worker"
+name = "puzzle-site"
 main = "src/worker.py"
 # Set this to today's date
 compatibility_date = "2026-11-24"
