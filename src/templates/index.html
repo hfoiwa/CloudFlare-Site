@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Puzzle Desk{% endblock %}
+{% block content %}
+<section class="intro">
+  <h1>Pick a puzzle.</h1>
+  <p class="lead">Quiet, ad-free logic games. Play at your own pace or take on today's daily.</p>
+</section>
+
+{# Add a game by appending to `games` in Flask: {name, description, endpoint, preview} #}
+{% set games = games or [{'name': 'Sudoku', 'description': 'Fill every row, column and box with 1 to 9.', 'endpoint': 'sudoku_menu', 'preview': 'sudoku'}] %}
+
+<section class="game-grid" aria-label="Games">
+  {% for game in games %}
+  <a class="game-card" href="{{ url_for(game.endpoint) }}">
+    <div class="preview preview-{{ game.preview }}" aria-hidden="true">
+      {% if game.preview == 'sudoku' %}
+        {% for n in [5,3,'',7,'','',1,'',9] %}<span>{{ n }}</span>{% endfor %}
+      {% endif %}
+    </div>
+    <h2>{{ game.name }}</h2>
+    <p>{{ game.description }}</p>
+  </a>
+  {% endfor %}
+</section>
+{% endblock %}

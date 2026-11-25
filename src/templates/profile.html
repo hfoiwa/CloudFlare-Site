@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}{{ current_user.username }} · Puzzle Desk{% endblock %}
+{% block content %}
+<section class="intro">
+  <h1>{{ current_user.username }}</h1>
+  <p class="lead">Member since {{ current_user.created_at.strftime('%B %Y') if current_user.created_at else 'today' }}</p>
+</section>
+
+{# Stats are optional; pass `stats` from Flask as a dict. #}
+{% set stats = stats or {} %}
+<section class="stats">
+  <div class="stat"><strong>{{ stats.get('solved', 0) }}</strong><span>Puzzles solved</span></div>
+  <div class="stat"><strong>{{ stats.get('streak', 0) }}</strong><span>Day streak</span></div>
+  <div class="stat"><strong>{{ stats.get('best_time', '--:--') }}</strong><span>Best time</span></div>
+</section>
+
+<section>
+  <h2 class="section-title">Recent games</h2>
+  {% if recent %}
+    <ul class="history">
+      {% for g in recent %}
+      <li><span>{{ g.game }} · {{ g.difficulty }}</span><span>{{ g.time }}</span><span class="muted">{{ g.date }}</span></li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p class="empty">No finished games yet. <a href="{{ url_for('sudoku_menu') }}">Start a sudoku</a></p>
+  {% endif %}
+</section>
+
+<a class="btn btn-ghost" href="{{ url_for('logout') }}">Log out</a>
+{% endblock %}

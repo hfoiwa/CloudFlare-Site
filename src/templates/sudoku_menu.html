@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Sudoku · Puzzle Desk{% endblock %}
+{% block content %}
+<nav class="crumbs" aria-label="Breadcrumb"><a href="{{ url_for('index') }}">Games</a> / Sudoku</nav>
+
+<section class="intro">
+  <h1>Sudoku</h1>
+  <p class="lead">Choose a difficulty, or play the puzzle everyone else is solving today.</p>
+</section>
+
+<section class="daily">
+  <div>
+    <h2>Daily challenge</h2>
+    <p>{{ today or 'Today' }}'s puzzle is the same for every player.
+      {% if daily_completed %}You've finished it. Come back tomorrow.{% endif %}</p>
+  </div>
+  <a class="btn" href="{{ url_for('sudoku_ingame', mode='daily') }}">
+    {% if daily_completed %}Replay daily{% else %}Play daily{% endif %}
+  </a>
+</section>
+
+<section aria-labelledby="levels">
+  <h2 id="levels" class="section-title">Or choose a difficulty</h2>
+  <div class="level-list">
+    {% for key, label, blurb, clues in [
+      ('easy', 'Easy', 'Plenty of starting numbers. Good for a warm-up.', 40),
+      ('medium', 'Medium', 'A few tricky spots that need some scanning.', 32),
+      ('hard', 'Hard', 'Fewer clues. Expect to hunt for pairs.', 27),
+      ('expert', 'Expert', 'Minimal clues. Advanced techniques required.', 22)] %}
+    <a class="level" href="{{ url_for('sudoku_ingame', mode=key) }}">
+      <span class="level-name">{{ label }}</span>
+      <span class="level-blurb">{{ blurb }}</span>
+      <span class="level-clues">{{ clues }} clues</span>
+    </a>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Sign up · Puzzle Desk{% endblock %}
+{% block content %}
+<section class="auth">
+  <h1>Create an account</h1>
+  <p class="lead">Save your times and keep your daily streak.</p>
+  <form method="post" class="form">
+    <label>Username <input type="text" name="username" autocomplete="username" required autofocus></label>
+    <label>Password <input type="password" name="password" autocomplete="new-password" minlength="8" required></label>
+    <button class="btn" type="submit">Sign up</button>
+  </form>
+  <p class="muted">Already have an account? <a href="{{ url_for('login') }}">Log in</a></p>
+</section>
+{% endblock %}
